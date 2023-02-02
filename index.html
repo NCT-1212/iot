@@ -1,25 +1,38 @@
+<!DOCTYPE html>
 <html>
-   <head>
-      <title>LED Control</title>
-   </head>
-   <body>
-      <h1>LED Control</h1>
-      <p>Current LED Status: <span id="status">OFF</span></p>
-      <button id="toggleButton">Toggle LED</button>
+<head>
+  <title>LED Control</title>
+</head>
+<body>
+  <h1>LED Control</h1>
+  <p>LED is currently: <span id="status">UNKNOWN</span></p>
+  <button id="turnOnButton">Turn On</button>
+  <button id="turnOffButton">Turn Off</button>
+  
+  <script>
+    const turnOnButton = document.querySelector("#turnOnButton");
+    const turnOffButton = document.querySelector("#turnOffButton");
+    const statusSpan = document.querySelector("#status");
 
-      <script>
-         const toggleButton = document.getElementById("toggleButton");
-         const statusDisplay = document.getElementById("status");
-         
-         toggleButton.addEventListener("click", function() {
-            fetch("/toggle")
-               .then(response => {
-                  return response.json();
-               })
-               .then(data => {
-                  statusDisplay.innerHTML = data.status;
-               });
-         });
-      </script>
-   </body>
+    turnOnButton.addEventListener("click", function() {
+      fetch("/LED=ON")
+        .then(function(response) {
+          return response.text();
+        })
+        .then(function(text) {
+          statusSpan.innerHTML = "ON";
+        });
+    });
+    
+    turnOffButton.addEventListener("click", function() {
+      fetch("/LED=OFF")
+        .then(function(response) {
+          return response.text();
+        })
+        .then(function(text) {
+          statusSpan.innerHTML = "OFF";
+        });
+    });
+  </script>
+</body>
 </html>
