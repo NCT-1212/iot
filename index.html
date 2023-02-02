@@ -4,19 +4,16 @@
   <title>ESP8266 Control</title>
 </head>
 <body>
-  <h1>ESP8266 Control</h1>
-  <button id="buttonA">Button A</button>
-  <div id="status"></div>
+  <h1>LED Control</h1>
+  <button id="toggleLED">Toggle LED</button>
   <script>
-    document.getElementById("buttonA").addEventListener("click", function(){
-      var xhr = new XMLHttpRequest();
-      xhr.open("GET", "toggleA.php", true);
-      xhr.onreadystatechange = function(){
-        if (xhr.readyState == 4 && xhr.status == 200){
-          document.getElementById("status").innerHTML = xhr.responseText;
-        }
-      }
-      xhr.send();
+    const toggleLED = document.getElementById("toggleLED");
+    toggleLED.addEventListener("click", () => {
+      fetch("/toggleLED").then((response) => {
+        response.text().then((text) => {
+          alert(text);
+        });
+      });
     });
   </script>
 </body>
